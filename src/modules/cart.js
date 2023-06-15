@@ -34,4 +34,7 @@ const cart = () => {
     }
 }
 
+const {openModal, closeModal, buttonCart, modalCart } = cart()
+export {openModal, closeModal, buttonCart, modalCart }
+
 export default cart 

@@ -1,7 +1,10 @@
 import { 
     openModal, closeModal, buttonCart, 
-    modalCart, close 
-} from './cart.js'
+    modalCart
+} from './cart'
+
+// import cart from "./cart"
+// const {openModal, closeModal, buttonCart, modalCart } = cart()
 
 buttonCart.addEventListener('click', () => {
     openModal()
