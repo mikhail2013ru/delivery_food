@@ -134,17 +134,56 @@ const cart = () => {
     })
 
     buttonCart.addEventListener('click', () => {
-       if (JSON.parse(localStorage.getItem('cart'))) {
-            renderItems(JSON.parse(localStorage.getItem('cart')))
-        }
+        body.innerHTML = ''
+        if (JSON.parse(localStorage.getItem('cart'))) {
+                renderItems(JSON.parse(localStorage.getItem('cart')))
+            }
 
-        openModal()
+            openModal()
 
         const cartArray = JSON.parse(localStorage.getItem('cart'))
+
         if (JSON.stringify(cartArray) === 'null') {
             console.log('na xyi')
-            buttonSend.style.disable = true
         }
+
+        const resultSum = Object.keys(cartArray).reduce((total, key) => {
+            total += cartArray[key].price
+            return total
+        }, 0)
+        console.log(resultSum)
+        // const cartLength = Object.keys(cartArray).length
+        // console.log(cartLength) 
+        // const sum = JSON.stringify(cartArray.price)
+        // cartArray.reduce(function(sum)) {
+
+        // }
+        // console.log(JSON.parse(localStorage.getItem('cart')))
+        // const cartArray = JSON.parse(localStorage.getItem('cart'))
+        // let result = 0
+        // cartArray.forEach(({ price } ) => {
+        //     result = result + price
+        //     return result
+            
+        // })
+        // console.log(result)
+
+        // const sumPrice = Object.keys(cartArray).reduce((total) => {
+        //     console.log(cartArray)
+        // })
+        // const users = [{ age: 25, age: 30, age: 45 }]
+        // users.reduce((total, currentItem) => {
+        //     total += currentItem.age
+        //     console.log(total)
+        // }, 0)
+        // Object.keys(users).reduce((total, currentItem) => {
+        //     total += currentItem
+        //     console.log(total)
+        // }, 0)
+
+        // users.reduce((total) => {
+        //     console.log(total.age)
+        // })
     })
 
     const openModal = () => {
