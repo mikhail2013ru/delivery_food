@@ -43,7 +43,7 @@ const cart = () => {
         })
 
         // renderItems()
-        // console.log(cartArray.price)
+        console.log(result)
     }
 
     const decrementCount = (id) => {
