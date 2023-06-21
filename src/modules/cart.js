@@ -15,6 +15,8 @@ const cart = () => {
 
     const incrementCount = (id) => {
         const cartArray = JSON.parse(localStorage.getItem('cart'))
+
+        let result = []
        
         cartArray.map((item) => {
             if (item.id === id) {
@@ -34,12 +36,13 @@ const cart = () => {
         localStorage.setItem('cart', JSON.stringify(cartArray))
         renderItems(cartArray)
 
-        cartArray.map(({ name, price, id, count }) => {
+        result = cartArray.map(({ name, price, id, count }) => {
             console.log(price * count)
             price += price * count
             return price
         })
 
+        // renderItems()
         // console.log(cartArray.price)
     }
 
