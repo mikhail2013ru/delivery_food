@@ -15,18 +15,31 @@ const cart = () => {
 
     const incrementCount = (id) => {
         const cartArray = JSON.parse(localStorage.getItem('cart'))
-        // console.log(id, price)
+       
         cartArray.map((item) => {
             if (item.id === id) {
                 item.count++
                 console.log(item.id)
             }
-
+            console.log(item)
             return item
         })
 
+        // const countPrice = () => {
+        //     cartArray.forEach(({ name, price, id, count }) => {
+        //     console.log(price * count)
+        //     return price * count
+        // })
+
         localStorage.setItem('cart', JSON.stringify(cartArray))
         renderItems(cartArray)
+
+        cartArray.forEach(({ name, price, id, count }) => {
+            console.log(price * count)
+            return price * count
+        })
+
+        console.log(cartArray.price)
     }
 
     const decrementCount = (id) => {
@@ -65,9 +78,10 @@ const cart = () => {
             </div>
             `
             
-            console.log(`${price}`)
             body.append(cartElem)
+
         })
+        // return data
         
     }
 
