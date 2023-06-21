@@ -34,12 +34,13 @@ const cart = () => {
         localStorage.setItem('cart', JSON.stringify(cartArray))
         renderItems(cartArray)
 
-        cartArray.forEach(({ name, price, id, count }) => {
+        cartArray.map(({ name, price, id, count }) => {
             console.log(price * count)
-            return price * count
+            price += price * count
+            return price
         })
 
-        console.log(cartArray.price)
+        // console.log(cartArray.price)
     }
 
     const decrementCount = (id) => {
