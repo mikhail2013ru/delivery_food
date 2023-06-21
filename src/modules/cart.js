@@ -5,6 +5,7 @@ const cart = () => {
     const body = modalCart.querySelector('.modal-body')
     const buttonSend = modalCart.querySelector('.button-primary')
     const clearCart = modalCart.querySelector('.clear-cart')
+    const modalPrice = modalCart.querySelector('.modal-pricetag')
 
     const resetCart = () => {
         body.innerHTML = ''
@@ -12,15 +13,13 @@ const cart = () => {
         closeModal()
     }
 
-    console.log(buttonSend)
-
     const incrementCount = (id) => {
         const cartArray = JSON.parse(localStorage.getItem('cart'))
-        
+        // console.log(id, price)
         cartArray.map((item) => {
             if (item.id === id) {
                 item.count++
-                console.log(id)
+                console.log(item.id)
             }
 
             return item
@@ -53,38 +52,30 @@ const cart = () => {
     
     const renderItems = (data) => {
         body.innerHTML = ''
-
         data.forEach(({ name, price, id, count }) => {
             const cartElem = document.createElement('div')
             cartElem.classList.add('food-row')
             cartElem.innerHTML = `
-                <span class="food-name">${name}</span>
-                <strong class="food-price">${price} ₽</strong>
-                <div class="food-counter">
-                    <button class="counter-button btn-dec" data-index="${id}">-</button>
-                    <span class="counter">${count}</span>
-                    <button class="counter-button btn-inc" data-index="${id}">+</button>
-                </div>
+            <span class="food-name">${name}</span>
+            <strong class="food-price">${price} ₽</strong>
+            <div class="food-counter">
+            <button class="counter-button btn-dec" data-index="${id}">-</button>
+            <span class="counter">${count}</span>
+            <button class="counter-button btn-inc" data-index="${id}">+</button>
+            </div>
             `
-
-            // cartElem.querySelector('.btn-dec').addEventListener('click', () => {
-            //     decrementCount(id)
-            // })
-
-            // cartElem.querySelector('.btn-inc').addEventListener('click', () => {
-            //     incrementCount(id)
-            // })
-
+            
+            console.log(`${price}`)
             body.append(cartElem)
-            console.log(cartElem)
-
         })
+        
     }
 
     body.addEventListener('click', (e) => {
         e.preventDefault()
         if (e.target.classList.contains('btn-inc')) {
             incrementCount(e.target.dataset.index)
+            
         } else if (e.target.classList.contains('btn-dec')) {
             decrementCount(e.target.dataset.index)
         }
@@ -106,26 +97,7 @@ const cart = () => {
             .catch(e => {
                 console.error(e)
             })
-        } else {
-
         }
-        // if (cartArray) {
-        //     console.log('nixera')
-        // } else {
-        //     fetch('https://jsonplaceholder.typicode.com/posts', {
-        //         method: 'POST',
-        //         body: cartArray
-        //     })
-        //     .then(response => {
-        //         if (response.ok) {
-        //             resetCart()
-        //         }
-        //     })
-        //     .catch(e => {
-        //         console.error(e)
-        //     })
-        // }
-
     })
 
     clearCart.addEventListener('click', () => {
@@ -137,53 +109,32 @@ const cart = () => {
         body.innerHTML = ''
         if (JSON.parse(localStorage.getItem('cart'))) {
                 renderItems(JSON.parse(localStorage.getItem('cart')))
-            }
+        }
 
-            openModal()
+        openModal()
 
         const cartArray = JSON.parse(localStorage.getItem('cart'))
 
-        if (JSON.stringify(cartArray) === 'null') {
-            console.log('na xyi')
-        }
-
-        const resultSum = Object.keys(cartArray).reduce((total, key) => {
-            total += cartArray[key].price
-            return total
-        }, 0)
-        console.log(resultSum)
-        // const cartLength = Object.keys(cartArray).length
-        // console.log(cartLength) 
-        // const sum = JSON.stringify(cartArray.price)
-        // cartArray.reduce(function(sum)) {
-
+        // const resultSum = () => {
+        //     Object.keys(cartArray).reduce((total, key) => {
+        //         total += cartArray[key].price
+        //         return total
+        //     }, 0)
         // }
-        // console.log(JSON.parse(localStorage.getItem('cart')))
-        // const cartArray = JSON.parse(localStorage.getItem('cart'))
-        // let result = 0
-        // cartArray.forEach(({ price } ) => {
-        //     result = result + price
-        //     return result
-            
-        // })
-        // console.log(result)
 
-        // const sumPrice = Object.keys(cartArray).reduce((total) => {
-        //     console.log(cartArray)
-        // })
-        // const users = [{ age: 25, age: 30, age: 45 }]
-        // users.reduce((total, currentItem) => {
-        //     total += currentItem.age
-        //     console.log(total)
-        // }, 0)
-        // Object.keys(users).reduce((total, currentItem) => {
-        //     total += currentItem
-        //     console.log(total)
-        // }, 0)
+        if (JSON.stringify(cartArray) === 'null') {
+            modalPrice.textContent = `Ваша корзина пуста!`
+            buttonSend.style.display = 'none'
+        } else {
+            buttonSend.style.display = 'flex'
+            let result = 0
+            cartArray.forEach(({ price } ) => {
+                result = result + price
+                return result
+            })
 
-        // users.reduce((total) => {
-        //     console.log(total.age)
-        // })
+            modalPrice.textContent = `${result} ₽`
+        }
     })
 
     const openModal = () => {
