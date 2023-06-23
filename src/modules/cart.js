@@ -15,17 +15,18 @@ const cart = () => {
 
     const incrementCount = (id) => {
         const cartArray = JSON.parse(localStorage.getItem('cart'))
-
         let result = []
        
-        cartArray.map((item) => {
+        result = cartArray.map((item) => {
             if (item.id === id) {
                 item.count++
-                console.log(item.id)
             }
-            console.log(item)
-            return item
+        
+            return { ...item, totalPrice: item.price * item.count }
         })
+
+        localStorage.setItem('cart', JSON.stringify(result))
+        renderItems(result)
 
         // const countPrice = () => {
         //     cartArray.forEach(({ name, price, id, count }) => {
@@ -33,23 +34,22 @@ const cart = () => {
         //     return price * count
         // })
 
-        localStorage.setItem('cart', JSON.stringify(cartArray))
-        renderItems(cartArray)
 
-        result = cartArray.map(({ name, price, id, count }) => {
-            console.log(price * count)
-            price += price * count
-            return price
-        })
+        // result = cartArray.map(({ name, price, id, count }) => {
+        //     console.log(count)
+        //     totalPrice += price * count
+        //     return { name, totalPrice, id, count, price }
+        // })
 
-        // renderItems()
-        console.log(result)
+        // renderItems(result)
+        // console.log(result)
     }
 
     const decrementCount = (id) => {
         const cartArray = JSON.parse(localStorage.getItem('cart'))
+        let result = []
         
-        cartArray.map((item) => {
+        result = cartArray.map((item) => {
             if (item.id === id) {
                 item.count = item.count > 0 ? item.count - 1 : 0
                 // if (item.count > 0) {
@@ -60,28 +60,37 @@ const cart = () => {
                 // console.log(id)
             }
 
-            return item
+            return { ...item, totalPrice: item.price * item.count }
         })
 
-        localStorage.setItem('cart', JSON.stringify(cartArray))
-        renderItems(cartArray)
+        result = result.filter(item => item.count)
+        localStorage.setItem('cart', JSON.stringify(result))
+
+        // console.log(JSON.stringify(result) == '[]')
+
+        if (JSON.stringify(result) === '[]') {
+            modalPrice.textContent = `Ваша корзина пуста!`
+            buttonSend.style.display = 'none'
+        }
+
+        renderItems(result)
     }
     
     const renderItems = (data) => {
         body.innerHTML = ''
-        data.forEach(({ name, price, id, count }) => {
+        data.forEach(({ name, totalPrice, price, id, count }) => {
             const cartElem = document.createElement('div')
             cartElem.classList.add('food-row')
             cartElem.innerHTML = `
             <span class="food-name">${name}</span>
-            <strong class="food-price">${price} ₽</strong>
+            <strong class="food-price">${totalPrice || price} ₽</strong>
             <div class="food-counter">
             <button class="counter-button btn-dec" data-index="${id}">-</button>
             <span class="counter">${count}</span>
             <button class="counter-button btn-inc" data-index="${id}">+</button>
             </div>
             `
-            
+        
             body.append(cartElem)
 
         })
@@ -139,11 +148,8 @@ const cart = () => {
         //         return total
         //     }, 0)
         // }
-
-        if (JSON.stringify(cartArray) === 'null') {
-            modalPrice.textContent = `Ваша корзина пуста!`
-            buttonSend.style.display = 'none'
-        } else {
+        console.log(cartArray)
+        if (cartArray && (JSON.stringify(cartArray) !== '[]')) {
             buttonSend.style.display = 'flex'
             let result = 0
             cartArray.forEach(({ price } ) => {
@@ -152,6 +158,10 @@ const cart = () => {
             })
 
             modalPrice.textContent = `${result} ₽`
+        } else {
+            modalPrice.textContent = `Ваша корзина пуста!`
+            buttonSend.style.display = 'none'
+            console.log('pusto')            
         }
     })
 
