@@ -3,6 +3,7 @@ export {modalAuth}
 const modalAuth = document.querySelector('.modal-auth')
 const buttonOut = document.querySelector('.button-out')
 const buttonCart = document.querySelector('.button-cart')
+const footerLink = document.querySelector('.footer-nav')
 
 const auth = () => {
     const userName = document.querySelector('.user-name')
@@ -58,6 +59,14 @@ const auth = () => {
     if (localStorage.getItem('user')) {
         login(JSON.parse(localStorage.getItem('user')))
     }
+
+    footerLink.addEventListener('click', (e) => {
+        e.preventDefault()
+        const trg = e.target
+        if (trg.classList.contains('footer-link--active')) return
+        document.querySelector('.footer-link--active').classList.remove('footer-link--active')
+        trg.classList.add('footer-link--active')            
+    })
 }
 
 export default auth

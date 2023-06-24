@@ -391,6 +391,12 @@ button {
     text-decoration: none;
 }
 
+.footer-link--active {
+    color: #1014f1;
+    font-weight: bold;
+    border-bottom: 2px solid #1014f1;
+}
+
 .footer-link:not(:last-child) {
     margin-right: 15px;
 }
