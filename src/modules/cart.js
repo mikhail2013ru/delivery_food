@@ -16,7 +16,6 @@ const cart = () => {
     const incrementCount = (id) => {
         const cartArray = JSON.parse(localStorage.getItem('cart'))
         let result = []
-       
         result = cartArray.map((item) => {
             if (item.id === id) {
                 item.count++
@@ -24,25 +23,14 @@ const cart = () => {
         
             return { ...item, totalPrice: item.price * item.count }
         })
-
+        console.log(result)
+        const totalPrice = result.reduce((sum, elem) => {
+            return sum += elem.totalPrice
+        }, 0)
+        
+        modalPrice.textContent = `${totalPrice} ₽`
         localStorage.setItem('cart', JSON.stringify(result))
         renderItems(result)
-
-        // const countPrice = () => {
-        //     cartArray.forEach(({ name, price, id, count }) => {
-        //     console.log(price * count)
-        //     return price * count
-        // })
-
-
-        // result = cartArray.map(({ name, price, id, count }) => {
-        //     console.log(count)
-        //     totalPrice += price * count
-        //     return { name, totalPrice, id, count, price }
-        // })
-
-        // renderItems(result)
-        // console.log(result)
     }
 
     const decrementCount = (id) => {
@@ -57,16 +45,18 @@ const cart = () => {
                 // } else {
                 //     item.count = 0
                 // }
-                // console.log(id)
             }
 
             return { ...item, totalPrice: item.price * item.count }
         })
 
         result = result.filter(item => item.count)
-        localStorage.setItem('cart', JSON.stringify(result))
+        const totalPrice = result.reduce((acc, item) => {
+            return acc += item.totalPrice
+        }, 0)
 
-        // console.log(JSON.stringify(result) == '[]')
+        modalPrice.textContent = `${totalPrice} ₽`
+        localStorage.setItem('cart', JSON.stringify(result))
 
         if (JSON.stringify(result) === '[]') {
             modalPrice.textContent = `Ваша корзина пуста!`
@@ -142,26 +132,19 @@ const cart = () => {
 
         const cartArray = JSON.parse(localStorage.getItem('cart'))
 
-        // const resultSum = () => {
-        //     Object.keys(cartArray).reduce((total, key) => {
-        //         total += cartArray[key].price
-        //         return total
-        //     }, 0)
-        // }
-        console.log(cartArray)
         if (cartArray && (JSON.stringify(cartArray) !== '[]')) {
             buttonSend.style.display = 'flex'
+            
             let result = 0
-            cartArray.forEach(({ price } ) => {
-                result = result + price
-                return result
-            })
+            for(const key in cartArray) {
+                const value = cartArray[key];
+                result += value['price'];
+            }
 
             modalPrice.textContent = `${result} ₽`
         } else {
             modalPrice.textContent = `Ваша корзина пуста!`
-            buttonSend.style.display = 'none'
-            console.log('pusto')            
+            buttonSend.style.display = 'none'       
         }
     })
 
