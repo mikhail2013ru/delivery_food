@@ -50,8 +50,9 @@ const partners = () => {
             cardsRestaurants.append(a)
         });
     }
-    
-    fetch('https://test-648ae-default-rtdb.firebaseio.com/db/partners.json')
+    // https://test-648ae-default-rtdb.firebaseio.com/db/partners.json
+    // http://localhost/delivery_food/db/partners.json
+    fetch('http://127.0.0.1:5500/db/partners.json')
         .then((response) => response.json())
         .then((data) => {
             renderItems(data)
