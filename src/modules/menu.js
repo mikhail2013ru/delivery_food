@@ -105,6 +105,6 @@ const menu = () => {
 
 }
 
-// const { renderItems } = menu
-// export { renderItems }
+const { renderItems } = menu()
+export { renderItems }
 export default menu
