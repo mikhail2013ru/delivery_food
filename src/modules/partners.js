@@ -1,4 +1,5 @@
 import {modalAuth} from './auth.js'
+import inputSearch from './inputSearch.js';
 
 const cardsRestaurants = document.querySelector('.cards-restaurants')
 
@@ -56,6 +57,7 @@ const partners = () => {
         .then((response) => response.json())
         .then((data) => {
             renderItems(data)
+            inputSearch(data)
         })
 }
 
