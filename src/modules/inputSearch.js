@@ -12,10 +12,31 @@ const inputSearch = (data) => {
 
             let newArr = []
             newArr = result.filter((item) => {
-                return item.kitchen === 'Пицца'
+                if (!searchText.test(item.kitchen)) {
+                    return item
+                }
+                // return item.kitchen === 'Пицца'
             })
+
+            cards.forEach((card) => {
+                const title = card.querySelector('.category');
+                console.log(title)
+                if (!searchText.test(title.textContent)) {
+                    card.parentNode.style.display = 'none';
+                } else {
+                    card.parentNode.style.display = '';
+                }
+            });
+            input.value = '';
+
+            // newArr.forEach((card) => {
+            //     console.log(card)
+            //     // card.parentNode.style.display = 'none';
+            // })
+
+
             
-            console.log(newArr)
+            // console.log(newArr)
             // renderItems(newArr)
         }
         
