@@ -10,39 +10,25 @@ const inputSearch = (data) => {
             const searchText = new RegExp(input.value.trim(), 'i');
             const result = Object.values(data)
 
-            cards.forEach((card) => {
-                const title = card.querySelector('.category');
-                console.log(title)
-                if (!searchText.test(title.textContent)) {
-                    card.parentNode.style.display = 'none';
-                } else {
-                    card.parentNode.style.display = '';
+            let newResult = result.map((item) => {
+                if (searchText.test(item.kitchen)) {
+                    console.log(item)
                 }
-            });
-            input.value = '';
+            })
 
-            // let newArr = []
-            // newArr = result.filter((item) => {
-            //     if (!searchText.test(item.kitchen)) {
-            //         return item
+            // console.log(newResult)
+
+            // cards.forEach((card) => {
+            //     const title = card.querySelector('.category');
+            //     console.log(title)
+            //     if (!searchText.test(title.textContent)) {
+            //         card.parentNode.style.display = 'none';
+            //     } else {
+            //         card.parentNode.style.display = '';
             //     }
-            //     // return item.kitchen === 'Пицца'
-            // })
-
-            // console.log(newArr)
-            // console.log(cards)
-
-            
-
-            // newArr.forEach((card) => {
-            //     console.log(card)
-            //     // card.parentNode.style.display = 'none';
-            // })
-
-
-            
-            // console.log(newArr)
-            // renderItems(newArr)
+            // });
+            // input.value = '';
+            // renderItems(newResult)
         }
         
     })
