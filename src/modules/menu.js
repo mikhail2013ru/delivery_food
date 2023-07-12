@@ -103,6 +103,9 @@ const menu = () => {
         window.location.href = '/'
     }
 
+    return {
+        renderItems
+    }
 }
 
 const { renderItems } = menu()
