@@ -10,14 +10,6 @@ const inputSearch = (data) => {
             const searchText = new RegExp(input.value.trim(), 'i');
             const result = Object.values(data)
 
-            let newArr = []
-            newArr = result.filter((item) => {
-                if (!searchText.test(item.kitchen)) {
-                    return item
-                }
-                // return item.kitchen === 'Пицца'
-            })
-
             cards.forEach((card) => {
                 const title = card.querySelector('.category');
                 console.log(title)
@@ -28,6 +20,19 @@ const inputSearch = (data) => {
                 }
             });
             input.value = '';
+
+            // let newArr = []
+            // newArr = result.filter((item) => {
+            //     if (!searchText.test(item.kitchen)) {
+            //         return item
+            //     }
+            //     // return item.kitchen === 'Пицца'
+            // })
+
+            // console.log(newArr)
+            // console.log(cards)
+
+            
 
             // newArr.forEach((card) => {
             //     console.log(card)

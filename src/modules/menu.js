@@ -35,7 +35,7 @@ const menu = () => {
                 if (item.id === cartItem.id) {
                     console.log(item.count++)
                 }
-
+                console.log(cartArray)
                 return item
             })
         } else {
