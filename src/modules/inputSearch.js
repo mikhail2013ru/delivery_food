@@ -1,34 +1,26 @@
 import renderItems from "./renderItems.js"
 
 const inputSearch = (data) => {
-    const cards = document.querySelectorAll('.cards')
     const input = document.querySelector('.input-search')
-    
+    let newData = []
     
     input.addEventListener('keydown', (e) => {
         if(e.keyCode === 13) {
-            const searchText = new RegExp(input.value.trim(), 'i');
-            const result = Object.values(data)
+            console.log(data)
 
-            let newResult = result.map((item) => {
-                if (searchText.test(item.kitchen)) {
-                    console.log(item)
-                }
+            data.forEach(name => {
+                newData.push(name.kitchen)
+            });
+
+            newData = newData.filter(item => {
+                const searchText = new RegExp(input.value.trim(), 'i');
+                return item.match(searchText)
             })
 
-            // console.log(newResult)
+            
+            document.querySelector('.cards-restaurants').innerHTML = ''
 
-            // cards.forEach((card) => {
-            //     const title = card.querySelector('.category');
-            //     console.log(title)
-            //     if (!searchText.test(title.textContent)) {
-            //         card.parentNode.style.display = 'none';
-            //     } else {
-            //         card.parentNode.style.display = '';
-            //     }
-            // });
-            // input.value = '';
-            // renderItems(newResult)
+            // renderItems(newData)
         }
         
     })
