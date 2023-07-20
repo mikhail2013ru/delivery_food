@@ -6,21 +6,17 @@ const inputSearch = (data) => {
     
     input.addEventListener('keydown', (e) => {
         if(e.keyCode === 13) {
-            console.log(data)
+            const searchText = new RegExp(input.value.trim(), 'i');
+            for (const value of data) {
+                if (searchText.test(value.kitchen)) {
+                    newData.push(value)
+                    console.log(value)                    
+                }
+            }
 
-            data.forEach(name => {
-                newData.push(name.kitchen)
-            });
-
-            newData = newData.filter(item => {
-                const searchText = new RegExp(input.value.trim(), 'i');
-                return item.match(searchText)
-            })
-
-            
             document.querySelector('.cards-restaurants').innerHTML = ''
 
-            // renderItems(newData)
+            renderItems(newData)            
         }
         
     })
