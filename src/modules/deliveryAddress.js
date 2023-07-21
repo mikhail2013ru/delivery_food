@@ -1,0 +1,10 @@
+const deliveryAddress = () => {
+    const logo = document.querySelector('.logo')
+    
+    logo.addEventListener('click', () => {
+        window.location.href = '/index.html'
+    })
+}
+
+
+export default deliveryAddress
